@@ -1,70 +1,112 @@
-# Getting Started with Create React App
+# ⌨️ TypeCat - Modern Typing Speed Test
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+[![React](https://img.shields.io/badge/React-19-61DAFB?style=flat-square&logo=react&logoColor=black)](https://react.dev/)
+[![React Router](https://img.shields.io/badge/React_Router-v7-CA4245?style=flat-square&logo=react-router&logoColor=white)](https://reactrouter.com/)
+[![Recharts](https://img.shields.io/badge/Recharts-3.x-22c55e?style=flat-square)](https://recharts.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](LICENSE)
 
-## Available Scripts
+A modern, distraction-free typing speed test web application built with **React**, **Lucide Icons**, and **Recharts**. Test your speed, improve accuracy, and track your progress over time with a sleek, dark-themed user interface.
 
-In the project directory, you can run:
+---
 
-### `npm start`
+## ✨ Features
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- **⚡ Real-Time Metrics**: Instant calculation of Words Per Minute (WPM), Accuracy percentage, and error tracking as you type.
+- **🎯 Live Visual Feedback**: Immediate letter-by-letter highlighting showing correct, erroneous, and active characters.
+- **⏱️ Flexible Test Modes**: Quick toggle between different timer durations (15s, 30s, 60s) and varying paragraph lengths.
+- **📊 Detailed Results & Analytics**: Post-test performance breakdown with comprehensive statistics and interactive score charts.
+- **🏆 Global Leaderboard**: Compete with other typists and check top scores on the community leaderboard.
+- **📈 Personal Dashboard**: Visualize your speed improvements and track historical test records.
+- **🎨 Sleek Dark Theme**: Designed with an eye-friendly, high-contrast dark aesthetic for maximum focus and minimal eye strain.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+---
 
-### `npm test`
+## 🛠️ Tech Stack
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- **Frontend**: [React 19](https://react.dev/)
+- **Routing**: [React Router v7](https://reactrouter.com/)
+- **Icons**: [Lucide React](https://lucide.dev/)
+- **Charts & Visualizations**: [Recharts](https://recharts.org/)
+- **Styling**: Modern Vanilla CSS with CSS variables and custom themes
 
-### `npm run build`
+---
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## 📁 Project Structure
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```text
+Typing_Test/
+├── public/                # Static assets & HTML template
+│   ├── index.html
+│   ├── favicon.ico
+│   └── manifest.json
+├── src/
+│   ├── components/        # Reusable UI components
+│   │   ├── Footer.js
+│   │   ├── Navbar.js
+│   │   ├── ResultCard.js
+│   │   ├── Timer.js
+│   │   └── TypingBox.js
+│   ├── data/              # Typing test paragraphs & datasets
+│   │   └── paragraphs.js
+│   ├── pages/             # Route pages
+│   │   ├── Dashboard.js
+│   │   ├── Home.js
+│   │   ├── Leaderboard.js
+│   │   ├── Login.js
+│   │   ├── NotFound.js
+│   │   ├── Register.js
+│   │   └── TypingTest.js
+│   ├── App.js             # App routes and layout
+│   ├── index.css          # Global styling & CSS variables
+│   └── index.js           # React DOM root entrypoint
+├── package.json           # Dependencies and scripts
+└── README.md
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+---
 
-### `npm run eject`
+## 🚀 Getting Started
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### Prerequisites
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- [Node.js](https://nodejs.org/) (version 16 or newer recommended)
+- [npm](https://www.npmjs.com/) or [yarn](https://yarnpkg.com/)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### Installation
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/TanishShetty007/Typing_Test.git
+   cd Typing_Test
+   ```
 
-## Learn More
+2. **Install dependencies:**
+   ```bash
+   npm install
+   ```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+3. **Start the development server:**
+   ```bash
+   npm start
+   ```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+4. Open [http://localhost:3000](http://localhost:3000) in your browser to start typing!
 
-### Code Splitting
+### Production Build
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+To create an optimized production build:
+```bash
+npm run build
+```
 
-### Analyzing the Bundle Size
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## 🤝 Contributing
 
-### Making a Progressive Web App
+Contributions, issues, and feature requests are welcome! Feel free to check the [issues page](https://github.com/TanishShetty007/Typing_Test/issues).
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+---
 
-### Advanced Configuration
+## 📄 License
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+This project is licensed under the [MIT License](LICENSE).
