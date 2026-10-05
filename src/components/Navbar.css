@@ -1,11 +1,21 @@
+/* ============================================================
+   Navbar.css — Navigation Bar Styles
+   ============================================================
+   Honeycomb color theme: dark amber background with golden accents
+   ============================================================ */
+
+/* The sticky header that stays at the top while scrolling */
 .navbar-container {
     position: sticky;
     top: 0;
     z-index: 1000;
-    background-color: var(--background);
+    background-color: rgba(255, 248, 231, 0.92);  /* Semi-transparent warm cream */
     border-bottom: 1px solid var(--border);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
 }
 
+/* Centers content and sets the navbar height */
 .navbar-content {
     max-width: 1200px;
     margin: 0 auto;
@@ -16,50 +26,65 @@
     justify-content: space-between;
 }
 
+/* Logo (icon + "TypeCat" text) */
 .navbar-brand {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
     text-decoration: none;
     color: var(--text-primary);
     transition: opacity 0.2s;
 }
 
 .navbar-brand:hover {
-    opacity: 0.8;
+    opacity: 0.85;
+    color: var(--text-primary);
 }
 
+/* Keyboard icon color */
 .logo-icon {
     color: var(--accent);
 }
 
+/* "TypeCat" brand text — deep golden gradient for contrast on light background */
 .logo-text {
     font-weight: 800;
     font-size: 1.25rem;
     letter-spacing: -0.5px;
+    background: linear-gradient(135deg, #B8900A, #D4A800);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
+/* Nav links container */
 .navbar-links {
     display: flex;
-    gap: 32px;
+    gap: 28px;
+    align-items: center;
 }
 
+/* Individual nav link */
 .nav-link {
     color: var(--text-secondary);
     font-weight: 500;
     font-size: 0.95rem;
     padding: 8px 0;
     position: relative;
+    transition: color 0.2s;
+    text-decoration: none;
 }
 
 .nav-link:hover {
-    color: var(--text-primary);
+    color: var(--accent);
 }
 
+/* The active page link */
 .nav-link.active {
-    color: var(--text-primary);
+    color: var(--accent);
 }
 
+/* Golden underline under the active link */
 .nav-link.active::after {
     content: '';
     position: absolute;
@@ -71,40 +96,52 @@
     border-radius: 2px;
 }
 
+/* Login / Get Started buttons area */
 .navbar-actions {
     display: flex;
-    gap: 16px;
+    gap: 12px;
     align-items: center;
 }
 
-/* Base button styles to be reused globally */
+/* ── Button Styles (global, used everywhere) ────────────────── */
 .btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 8px 16px;
-    border-radius: 6px;
+    padding: 8px 18px;
+    border-radius: 8px;
     font-weight: 600;
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     cursor: pointer;
     transition: all 0.2s ease;
     border: 1px solid transparent;
+    text-decoration: none;
+    font-family: inherit;
 }
 
+/* Ghost button — transparent outline style */
 .btn-ghost {
-    color: var(--text-primary);
+    color: var(--text-secondary);
     background: transparent;
+    border-color: var(--border);
 }
 
 .btn-ghost:hover {
-    background: var(--surface);
+    background: var(--surface-hover);
+    color: var(--accent);
+    border-color: var(--accent);
 }
 
+/* Primary button — golden filled */
 .btn-primary {
     background: var(--accent);
-    color: var(--background);
+    color: #1a1200;    /* Dark text on bright golden background */
+    border-color: var(--accent);
 }
 
 .btn-primary:hover {
     background: var(--accent-hover);
+    border-color: var(--accent-hover);
+    box-shadow: 0 0 20px rgba(255, 193, 7, 0.35);
+    transform: translateY(-1px);
 }

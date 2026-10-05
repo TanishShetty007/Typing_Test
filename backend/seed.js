@@ -1,27 +1,9 @@
-// ============================================================
-// src/data/paragraphs.js — Typing Test Text Content
-// ============================================================
-// This file contains all the text passages used in the typing
-// test. They are organized by:
-//   - difficulty: 'easy', 'medium', or 'hard'
-//   - category:   'general', 'quotes', or 'code'
-//   - language:   only for 'code' category (python, javascript, java, cpp)
-//
-// The TypingTest page picks a passage based on the user's
-// selected difficulty, mode, and (for code) language.
-//
-// Text length scales with test duration:
-//   15s  → short (50–80 chars)
-//   30s  → medium (100–160 chars)
-//   60s  → long (200–350 chars)
-//   120s → very long (400–700 chars)
-// ============================================================
+const mongoose = require('mongoose');
+const Passage = require('./models/Passage');
+require('dotenv').config();
 
-export const paragraphs = [
-
-    // ──────────────────────────────────────────────────────────
-    // GENERAL WORDS — easy
-    // ──────────────────────────────────────────────────────────
+// The original paragraphs data
+const paragraphs = [
     {
         id: 1,
         text: "the quick brown fox jumps over the lazy dog near the river bank",
@@ -57,10 +39,6 @@ export const paragraphs = [
         text: "learning to type fast is a skill that takes time and patience but it is one of the most useful things you can ever learn in the modern world where almost everything we do requires a keyboard whether you are writing emails sending messages coding software or creating documents the ability to type quickly and accurately saves you an enormous amount of time every single day of your life",
         difficulty: "easy", category: "general", duration: 120
     },
-
-    // ──────────────────────────────────────────────────────────
-    // GENERAL WORDS — medium
-    // ──────────────────────────────────────────────────────────
     {
         id: 8,
         text: "velocity increases exponentially when consistent practice replaces hesitation",
@@ -81,10 +59,6 @@ export const paragraphs = [
         text: "technology is neither good nor bad in itself but the manner in which we choose to use it determines whether it enriches or diminishes our lives. The invention of the internet connected billions of people across the globe creating unprecedented opportunities for communication collaboration commerce and creativity. Yet it also introduced new challenges around privacy misinformation and addiction that society is still struggling to address effectively in the modern era of smartphones and social media platforms",
         difficulty: "medium", category: "general", duration: 120
     },
-
-    // ──────────────────────────────────────────────────────────
-    // GENERAL WORDS — hard
-    // ──────────────────────────────────────────────────────────
     {
         id: 12,
         text: "asynchronous paradigms necessitate meticulous orchestration",
@@ -105,10 +79,6 @@ export const paragraphs = [
         text: "the epistemological underpinnings of artificial intelligence necessitate an interdisciplinary examination encompassing computational linguistics cognitive psychology probabilistic reasoning and distributed systems theory. Contemporary large language models demonstrate remarkable emergent capabilities that transcend their explicit training objectives suggesting that sufficiently parameterized neural architectures develop internal representations that approximate genuine semantic understanding rather than mere statistical pattern interpolation across the token distribution manifold",
         difficulty: "hard", category: "general", duration: 120
     },
-
-    // ──────────────────────────────────────────────────────────
-    // FAMOUS QUOTES
-    // ──────────────────────────────────────────────────────────
     {
         id: 20,
         text: "it always seems impossible until it is done",
@@ -144,10 +114,6 @@ export const paragraphs = [
         text: "Any sufficiently advanced technology is indistinguishable from magic. We live in an era where the devices in our pockets perform billions of calculations per second yet we treat them as mundane objects we scroll through while waiting for coffee.",
         difficulty: "hard", category: "quotes", duration: 120
     },
-
-    // ──────────────────────────────────────────────────────────
-    // CODE — JavaScript
-    // ──────────────────────────────────────────────────────────
     {
         id: 30,
         text: "const add = (a, b) => a + b;",
@@ -184,10 +150,6 @@ export const paragraphs = [
         difficulty: "hard", category: "code", language: "javascript", duration: 60,
         explanation: "A debounce function delays executing a function until after a user stops triggering it. It's commonly used for search inputs — you don't want to fire an API call on every single keypress."
     },
-
-    // ──────────────────────────────────────────────────────────
-    // CODE — Python
-    // ──────────────────────────────────────────────────────────
     {
         id: 40,
         text: "def greet(name):\n    return f\"Hello, {name}!\"",
@@ -218,10 +180,6 @@ export const paragraphs = [
         difficulty: "hard", category: "code", language: "python", duration: 60,
         explanation: "Python's async/await syntax enables non-blocking I/O. The async with statement manages async context managers. aiohttp is Python's async HTTP library for making non-blocking API calls."
     },
-
-    // ──────────────────────────────────────────────────────────
-    // CODE — Java
-    // ──────────────────────────────────────────────────────────
     {
         id: 50,
         text: "public int add(int a, int b) {\n    return a + b;\n}",
@@ -246,10 +204,6 @@ export const paragraphs = [
         difficulty: "hard", category: "code", language: "java", duration: 60,
         explanation: "Java Streams API allows functional-style operations on collections. filter() keeps only elements matching a condition (even numbers), and collect() gathers the results into a new List."
     },
-
-    // ──────────────────────────────────────────────────────────
-    // CODE — C++
-    // ──────────────────────────────────────────────────────────
     {
         id: 60,
         text: "#include <iostream>\nint main() {\n    std::cout << \"Hello, World!\" << std::endl;\n    return 0;\n}",
@@ -273,52 +227,39 @@ export const paragraphs = [
         text: "template <typename T>\nclass Stack {\nprivate:\n    std::vector<T> data;\npublic:\n    void push(T val) { data.push_back(val); }\n    T pop() { T val = data.back(); data.pop_back(); return val; }\n    bool empty() const { return data.empty(); }\n};",
         difficulty: "hard", category: "code", language: "cpp", duration: 60,
         explanation: "A C++ template class lets you write a single Stack that works with any data type (int, string, etc.). The <typename T> makes T a placeholder type filled in at compile time."
-    },
+    }
 ];
 
-// ── Helper Functions ─────────────────────────────────────────
-// These functions are used by TypingTest.js to pick a passage
+const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/typecat';
 
-/**
- * Get passages filtered by mode, difficulty, language, and target duration.
- * Returns an array of matching passages.
- */
-export function getPassages({ mode, difficulty, language, duration }) {
-    return paragraphs.filter(p => {
-        // Filter by category based on mode
-        const modeMatch =
-            (mode === 'words'  && p.category === 'general') ||
-            (mode === 'quotes' && p.category === 'quotes')  ||
-            (mode === 'code'   && p.category === 'code');
+mongoose.connect(MONGO_URI)
+    .then(async () => {
+        console.log('✅ Connected to MongoDB for seeding');
+        
+        await Passage.deleteMany({});
+        console.log('Cleared existing passages');
 
-        // Filter by difficulty
-        const diffMatch = p.difficulty === difficulty;
+        const docs = paragraphs.map(p => {
+            // Double the text
+            const separator = p.category === 'code' ? '\n' : ' ';
+            const doubledText = p.text + separator + p.text;
+            
+            return {
+                text: doubledText,
+                difficulty: p.difficulty,
+                category: p.category,
+                language: p.language,
+                duration: p.duration,
+                explanation: p.explanation
+            };
+        });
 
-        // For code mode, also filter by programming language
-        const langMatch = mode !== 'code' || !language || p.language === language;
-
-        // Filter by test duration (find passages designed for this length)
-        const durMatch = !p.duration || p.duration === duration;
-
-        return modeMatch && diffMatch && langMatch && durMatch;
+        await Passage.insertMany(docs);
+        console.log(`✅ Seeded ${docs.length} passages (with doubled text)`);
+        
+        process.exit(0);
+    })
+    .catch(err => {
+        console.error('Seeding failed:', err);
+        process.exit(1);
     });
-}
-
-/**
- * Pick a random passage from a filtered list.
- * If no match is found, falls back to the first available passage.
- */
-export function getRandomPassage({ mode, difficulty, language, duration }) {
-    let matches = getPassages({ mode, difficulty, language, duration });
-
-    // If no exact duration match, try without duration filter
-    if (matches.length === 0) {
-        matches = getPassages({ mode, difficulty, language, duration: null });
-    }
-
-    // Final fallback: just use the first paragraph
-    if (matches.length === 0) return paragraphs[0];
-
-    // Pick a random one from the matches
-    return matches[Math.floor(Math.random() * matches.length)];
-}
