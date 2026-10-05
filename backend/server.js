@@ -20,8 +20,23 @@ const passageRoutes = require('./routes/passages');
 const app = express();
 
 // ── Middleware ──────────────────────────────────────────────
-// Allow requests from our React frontend (port 3000)
-app.use(cors({ origin: 'http://localhost:3000' }));
+// Allow requests from the React frontend.
+// In production, set FRONTEND_URL in the Render environment variables
+// to your Vercel deployment URL (e.g. https://your-app.vercel.app).
+const allowedOrigins = [
+    'http://localhost:3000',
+    process.env.FRONTEND_URL,
+].filter(Boolean); // removes undefined if FRONTEND_URL is not set
+
+app.use(cors({
+    origin: (origin, callback) => {
+        // Allow requests with no origin (e.g. curl, Postman, server-to-server)
+        if (!origin) return callback(null, true);
+        if (allowedOrigins.includes(origin)) return callback(null, true);
+        callback(new Error(`CORS blocked: ${origin} is not allowed.`));
+    },
+    credentials: true,
+}));
 
 // Parse incoming JSON request bodies
 app.use(express.json());

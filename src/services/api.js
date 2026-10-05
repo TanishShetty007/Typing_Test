@@ -12,9 +12,11 @@
 
 import axios from 'axios';
 
-// The base URL of our Express backend
-// During development, the backend runs on port 5000
-const BASE_URL = 'http://localhost:5000/api';
+// The base URL of our Express backend.
+// In production (Vercel), set REACT_APP_API_URL to your Render backend URL,
+// e.g.  https://typecat-api.onrender.com/api
+// Locally it falls back to port 5000.
+const BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
 
 // Create an axios instance with default settings
 const axiosInstance = axios.create({
